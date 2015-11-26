@@ -601,9 +601,7 @@ Make sure to keep the value as comfortably small as possible to keep security ri
 
 To request attributes from the IdP the SP needs to provide an attribute service within it's metadata and reference the index in the assertion.
 
-```ruby
-settings = OneLogin::RubySaml::Settings.new
-
+```
 settings.attributes_index = 5
 settings.attribute_consuming_service.configure do
   service_name "Service"
@@ -614,3 +612,19 @@ end
 ```
 
 The `attribute_value` option additionally accepts an array of possible values.
+
+# Culture Amp Ruby Saml
+
+## Overview
+
+Supports multiple X509 certificates in metadata.
+Stores fingerprints and certs in an array.
+Validate response against array of fingerprints/certs.
+
+The primary differences between this and the official gem are
+
+- `IdpMetadataParser` will parse ALL X509 certificates in the metadata
+- it stores fingerprints in `idp_cert_fingerprint_multi`
+- it stores certificates in `idp_cert_multi`
+- `idp_cert_multi` and `idp_cert_fingerprint_multi` are arrays
+- it calls `is_valid_multi_cert?` to validates against multiple fingerprints or certs
